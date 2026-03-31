@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amazon List Auto-Cart</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+    </div>
+    <h1>Amazon List Auto-Cart</h1>
+  </header>
+
+  <!-- State: not on a list page -->
+  <div id="state-wrong-page" class="state" hidden>
+    <div class="notice warn">
+      <strong>Not an Amazon list page.</strong>
+      <p>Navigate to an Amazon wishlist or registry, then click this extension.</p>
+      <p class="hint">e.g. amazon.com/hz/wishlist/ls/...</p>
+    </div>
+  </div>
+
+  <!-- State: idle on a valid list page -->
+  <div id="state-idle" class="state" hidden>
+    <div class="notice info">
+      <strong>Ready to parse your list.</strong>
+      <p>Click "Scan List" to load all items and see what needs to be added to your cart.</p>
+    </div>
+    <button id="btn-scan" class="btn primary full">Scan List</button>
+  </div>
+
+  <!-- State: scanning / loading -->
+  <div id="state-scanning" class="state" hidden>
+    <div class="spinner-row">
+      <div class="spinner"></div>
+      <span>Scrolling through list to load all items…</span>
+    </div>
+  </div>
+
+  <!-- State: results ready -->
+  <div id="state-results" class="state" hidden>
+    <div class="summary-bar">
+      <span id="summary-text"></span>
+      <button id="btn-rescan" class="btn ghost small">Re-scan</button>
+    </div>
+
+    <div id="item-list"></div>
+
+    <div class="action-row">
+      <button id="btn-add-all" class="btn primary full">Add All to Cart</button>
+    </div>
+    <p id="fresh-note" class="hint" hidden>Amazon Fresh items will be added first.</p>
+  </div>
+
+  <!-- State: adding to cart -->
+  <div id="state-adding" class="state" hidden>
+    <div class="spinner-row">
+      <div class="spinner"></div>
+      <span id="adding-label">Adding items to cart…</span>
+    </div>
+    <div id="progress-list" class="progress-list"></div>
+  </div>
+
+  <!-- State: done -->
+  <div id="state-done" class="state" hidden>
+    <div id="done-summary" class="notice"></div>
+    <div id="final-list" class="progress-list"></div>
+    <div class="action-row">
+      <a id="btn-view-cart" href="https://www.amazon.com/gp/cart/view.html" target="_blank" class="btn primary full">View Cart</a>
+      <button id="btn-restart" class="btn ghost full">Start Over</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
